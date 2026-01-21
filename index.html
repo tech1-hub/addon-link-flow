@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>How Torrentio Works with Torrent Sources Explained</title>
+
+<meta name="robots" content="index, follow">
+<meta name="description" content="A detailed, educational explanation of how Torrentio works with torrent sources inside Stremio, focusing on indexing, aggregation, and system logic.">
+<meta name="keywords" content="Torrentio explained, torrent sources Stremio, streaming add-ons, torrent aggregation system">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+  --bg:#081c24;
+  --panel:#0f2a33;
+  --card:#123843;
+  --primary:#22d3a6;
+  --secondary:#5eead4;
+  --text:#e6fffa;
+  --muted:#9fdcd2;
+  --border:#1f4e5a;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Inter,"Segoe UI",Arial,sans-serif;
+  background:linear-gradient(180deg,#081c24,#0b2f3a);
+  color:var(--text);
+  line-height:1.9;
+}
+
+a{
+  color:var(--primary);
+  text-decoration:none;
+  font-weight:600;
+}
+a:hover{color:var(--secondary)}
+
+.hero{
+  padding:110px 20px;
+  text-align:center;
+  background:radial-gradient(circle at top,#134e5e,#081c24);
+  border-bottom:1px solid var(--border);
+}
+
+.hero h1{
+  font-size:2.7rem;
+  max-width:1100px;
+  margin:0 auto 24px;
+  color:#ffffff;
+}
+
+.hero p{
+  max-width:980px;
+  margin:auto;
+  font-size:1.1rem;
+  color:var(--muted);
+}
+
+.container{
+  max-width:1200px;
+  margin:auto;
+  padding:80px 20px;
+}
+
+section{margin-bottom:95px}
+
+h2{
+  font-size:2.15rem;
+  color:#ccfbf1;
+  margin-bottom:22px;
+}
+
+h3{
+  margin-top:40px;
+  color:#ffffff;
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:42px;
+  box-shadow:0 30px 55px rgba(0,0,0,0.45);
+}
+
+p{margin-bottom:22px}
+
+ul{padding-left:26px}
+li{margin-bottom:12px;color:var(--muted)}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:34px;
+  margin-top:40px;
+}
+
+.grid div{
+  background:linear-gradient(135deg,#164e63,#0f2a33);
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:32px;
+}
+
+.highlight{
+  background:linear-gradient(135deg,rgba(34,211,166,0.25),rgba(94,234,212,0.18));
+  border-left:6px solid var(--primary);
+  padding:32px;
+  border-radius:20px;
+  margin:55px 0;
+  color:#ecfeff;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>How Torrentio Works with Torrent Sources Explained</h1>
+  <p>
+    A clear, system-level explanation of how streaming add-ons interact with torrent
+    sources inside Stremio, focusing on indexing, aggregation, and delivery logic.
+  </p>
+</div>
+
+<div class="container">
+
+<!-- INTRO -->
+<section>
+<h2>Introduction</h2>
+<p>
+Streaming platforms increasingly rely on modular architectures where external add-ons
+supply content references instead of hosting media directly. This approach allows
+platforms to remain lightweight while supporting a wide range of content sources.
+</p>
+<p>
+This article explains how
+<a href="https://torrentios.org" target="_blank">Torrentio</a>
+works with torrent sources in an educational and neutral way. The goal is to clarify the
+technical flow—how sources are discovered, filtered, and presented—without encouraging
+misuse or unsafe practices.
+</p>
+</section>
+
+<!-- STREMIO CONTEXT -->
+<section>
+<h2>The Role of Add-ons in Stremio</h2>
+<div class="card">
+<p>
+Stremio operates using an add-on system. Instead of embedding content providers directly,
+it allows add-ons to respond to user requests for movies or series with relevant metadata
+and stream references.
+</p>
+<p>
+When a user selects a title, Stremio sends a request to installed add-ons, which then return
+available streams. Stremio simply displays these responses—it does not control how sources
+are gathered.
+</p>
+</div>
+</section>
+
+<!-- TORRENT SOURCES -->
+<section>
+<h2>What Are Torrent Sources?</h2>
+<p>
+Torrent sources are publicly indexed references to distributed files shared across peer-to-peer
+networks. These sources include metadata such as file size, encoding, resolution, and
+availability signals.
+</p>
+
+<div class="grid">
+<div>
+<h3>Decentralized Distribution</h3>
+<p>
+Files are shared across multiple peers rather than a single server.
+</p>
+</div>
+<div>
+<h3>Metadata-Driven Discovery</h3>
+<p>
+Indexes rely on structured metadata to identify content.
+</p>
+</div>
+<div>
+<h3>Dynamic Availability</h3>
+<p>
+Source availability can change based on network participation.
+</p>
+</div>
+</div>
+</section>
+
+<!-- INTERACTION -->
+<section>
+<h2>How Torrentio Interacts with Torrent Indexes</h2>
+<div class="card">
+<p>
+Torrentio does not host torrent files or media content. Instead, it queries torrent indexes
+that catalog available sources. These indexes function like searchable databases.
+</p>
+<p>
+When a request is made, the add-on searches for matching entries based on title, year,
+episode number, and other identifiers.
+</p>
+</div>
+</section>
+
+<!-- MATCHING -->
+<section>
+<h2>Title Matching and Identification</h2>
+<p>
+Matching the correct torrent source requires more than simple name comparison. Titles may
+have alternate spellings, translations, or release variations.
+</p>
+<div class="highlight">
+Smart matching logic aligns titles using structured identifiers and contextual metadata.
+</div>
+<p>
+This reduces false matches and improves result relevance.
+</p>
+</section>
+
+<!-- FILTERING -->
+<section>
+<h2>Filtering Torrent Results</h2>
+<div class="card">
+<p>
+Not every available source is suitable for streaming. Filtering logic helps prioritize
+sources that meet technical and usability criteria.
+</p>
+<ul>
+<li>Resolution and encoding format</li>
+<li>File size thresholds</li>
+<li>Episode and season accuracy</li>
+<li>Playback compatibility</li>
+</ul>
+</div>
+</section>
+
+<!-- AGGREGATION -->
+<section>
+<h2>Aggregating Results from Multiple Sources</h2>
+<p>
+To improve reliability, add-ons may query multiple torrent indexes. Results are aggregated
+and normalized before being returned to Stremio.
+</p>
+<p>
+This aggregation ensures users see a range of options rather than relying on a single
+source.
+</p>
+</section>
+
+<!-- RESPONSE -->
+<section>
+<h2>How Results Are Sent Back to Stremio</h2>
+<div class="card">
+<p>
+Once suitable torrent sources are identified, Torrentio formats them into a response that
+Stremio understands. Each result includes labels such as quality, source type, and file
+information.
+</p>
+<p>
+Stremio then displays these options alongside responses from other installed add-ons.
+</p>
+</div>
+</section>
+
+<!-- PERFORMANCE -->
+<section>
+<h2>Performance and Request Efficiency</h2>
+<p>
+Because source fetching happens in real time, performance is critical. Efficient querying
+and response formatting help avoid delays in the user interface.
+</p>
+<div class="highlight">
+Caching and lightweight processing improve responsiveness during peak usage.
+</div>
+</section>
+
+<!-- LIMITATIONS -->
+<section>
+<h2>Limitations of Torrent-Based Sources</h2>
+<div class="card">
+<p>
+Torrent sources depend on external factors such as network participation and index updates.
+Availability may change, and results can vary over time.
+</p>
+<p>
+Understanding these limitations helps users set realistic expectations about consistency.
+</p>
+</div>
+</section>
+
+<!-- INTEGRATION -->
+<section>
+<h2>Integration Within the Stremio Ecosystem</h2>
+<p>
+Torrentio operates as one component within a larger ecosystem of add-ons. Each add-on
+contributes independently to the overall experience.
+</p>
+<p>
+Technical concepts similar to this integration model are discussed in broader Stremio
+system documentation, such as
+<a href="https://tech1-hub.github.io/stremio-integration/" target="_blank">
+Stremio add-on integration resources
+</a>,
+which explain how add-ons communicate with the platform.
+</p>
+</section>
+
+<!-- SECURITY -->
+<section>
+<h2>Security and System Boundaries</h2>
+<div class="card">
+<p>
+Add-ons operate within defined boundaries. They respond to requests but do not control
+playback behavior or store user data.
+</p>
+<p>
+Well-designed add-ons focus on delivering structured responses rather than interacting
+directly with users.
+</p>
+</div>
+</section>
+
+<!-- FUTURE -->
+<section>
+<h2>The Future of Torrent-Based Add-on Systems</h2>
+<p>
+As streaming ecosystems evolve, add-ons are likely to adopt smarter indexing, improved
+metadata normalization, and better performance optimizations.
+</p>
+<ul>
+<li>More accurate title matching</li>
+<li>Improved filtering logic</li>
+<li>Faster aggregation</li>
+<li>Stronger platform compatibility</li>
+</ul>
+</section>
+
+<!-- CONCLUSION -->
+<section>
+<h2>Conclusion</h2>
+<p>
+Torrentio works with torrent sources by acting as an intelligent connector between torrent
+indexes and the Stremio interface. It does not host content, but instead organizes available
+sources into a structured format that Stremio can display.
+</p>
+<p>
+By understanding this process, users gain insight into how modular streaming platforms
+function and why intelligent aggregation is essential for scalable media systems.
+</p>
+</section>
+
+</div>
+
+</body>
+</html>
